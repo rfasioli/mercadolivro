@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class MercadolivreApplication
 
 fun main(args: Array<String>) {
-	runApplication<MercadolivreApplication>(*args)
+    runApplication<MercadolivreApplication>(*args)
 }
