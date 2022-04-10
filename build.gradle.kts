@@ -32,4 +32,8 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	val javaToolchains = project.extensions.getByType<JavaToolchainService>()
+	javaLauncher.set(javaToolchains.launcherFor {
+		languageVersion.set(JavaLanguageVersion.of(17))
+	})
 }

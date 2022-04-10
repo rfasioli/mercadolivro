@@ -30,7 +30,7 @@ class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createCustomer(@RequestBody customer: PostCustomerRequest) =
-        customers.add(customer.toModel(((customers.size ?: 0) + 1).toString()))
+        customers.add(customer.toModel(((customers.size) + 1).toString()))
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
