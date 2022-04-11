@@ -1,10 +1,10 @@
-package br.com.rfasioli.mercadolivre.controller
+package br.com.rfasioli.mercadolivro.controller
 
-import br.com.rfasioli.mercadolivre.controller.mapper.mergeWithModel
-import br.com.rfasioli.mercadolivre.controller.mapper.toModel
-import br.com.rfasioli.mercadolivre.controller.request.PostCustomerRequest
-import br.com.rfasioli.mercadolivre.controller.request.PutCustomerRequest
-import br.com.rfasioli.mercadolivre.model.CustomerModel
+import br.com.rfasioli.mercadolivro.controller.mapper.mergeWithModel
+import br.com.rfasioli.mercadolivro.controller.mapper.toModel
+import br.com.rfasioli.mercadolivro.controller.request.PostCustomerRequest
+import br.com.rfasioli.mercadolivro.controller.request.PutCustomerRequest
+import br.com.rfasioli.mercadolivro.model.CustomerModel
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

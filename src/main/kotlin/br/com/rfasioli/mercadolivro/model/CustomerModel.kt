@@ -1,4 +1,4 @@
-package br.com.rfasioli.mercadolivre.model
+package br.com.rfasioli.mercadolivro.model
 
 data class CustomerModel(
     var id: String,

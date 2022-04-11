@@ -1,4 +1,4 @@
-package br.com.rfasioli.mercadolivre.controller.request
+package br.com.rfasioli.mercadolivro.controller.request
 
 data class PostCustomerRequest(
     val name: String,

@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -5,7 +6,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.6.20"
     kotlin("plugin.spring") version "1.6.20"
-    id("io.gitlab.arturbosch.detekt") version "1.0.0.RC6-4"
+    id("io.gitlab.arturbosch.detekt") version "1.20.0-RC2"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
@@ -43,10 +44,15 @@ tasks.withType<Test> {
 }
 
 detekt {
-    version = "1.0.0.RC6-4"
-    defaultProfile {
-        input = "$projectDir/src/main/kotlin"
-        config = "$projectDir/config/detekt/style-config.yml" // Code style rules file.
-        filters = ".*/res/.*,.*build/.*"
+    toolVersion = "1.20.0-RC2"
+    config = files("$projectDir/config/detekt/style-config.yml")
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
     }
 }

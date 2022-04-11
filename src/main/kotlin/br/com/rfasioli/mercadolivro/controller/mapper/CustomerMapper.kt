@@ -1,8 +1,8 @@
-package br.com.rfasioli.mercadolivre.controller.mapper
+package br.com.rfasioli.mercadolivro.controller.mapper
 
-import br.com.rfasioli.mercadolivre.controller.request.PostCustomerRequest
-import br.com.rfasioli.mercadolivre.controller.request.PutCustomerRequest
-import br.com.rfasioli.mercadolivre.model.CustomerModel
+import br.com.rfasioli.mercadolivro.controller.request.PostCustomerRequest
+import br.com.rfasioli.mercadolivro.controller.request.PutCustomerRequest
+import br.com.rfasioli.mercadolivro.model.CustomerModel
 
 fun PostCustomerRequest.toModel(id: String): CustomerModel =
     CustomerModel(
