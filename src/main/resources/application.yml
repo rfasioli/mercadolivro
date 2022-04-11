@@ -8,4 +8,4 @@ spring:
     url: jdbc:mysql://localhost:13306/mercadolivro
     username: root
     password: example
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
