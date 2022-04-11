@@ -1,11 +1,11 @@
-package br.com.rfasioli.mercadolivre
+package br.com.rfasioli.mercadolivro
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class MercadolivreApplication
+class MercadolivroApplication
 
 fun main(args: Array<String>) {
-    runApplication<MercadolivreApplication>(*args)
+    runApplication<MercadolivroApplication>(*args)
 }

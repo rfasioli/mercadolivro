@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -43,10 +44,15 @@ tasks.withType<Test> {
 }
 
 detekt {
-    version = "1.0.0.RC6-4"
-    defaultProfile {
-        input = "$projectDir/src/main/kotlin"
-        config = "$projectDir/config/detekt/style-config.yml" // Code style rules file.
-        filters = ".*/res/.*,.*build/.*"
+    toolVersion = "1.20.0-RC2"
+    config = files("$projectDir/config/detekt/style-config.yml")
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
     }
 }
