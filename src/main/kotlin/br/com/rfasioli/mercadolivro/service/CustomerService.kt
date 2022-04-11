@@ -1,5 +1,6 @@
 package br.com.rfasioli.mercadolivro.service
 
+import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -10,8 +11,8 @@ class CustomerService(
 ) {
 
     fun getAllCustomer(name: String?): List<CustomerModel> =
-        (name?.let { customerRepository.findByNameContaining(name) }
-            ?: customerRepository.findAll()).toList()
+        name?.let { customerRepository.findByNameContaining(name).toList() }
+            ?: customerRepository.findAll().toList()
 
     fun getCustomer(id: Int): CustomerModel =
         customerRepository.findById(id).get()
@@ -23,11 +24,11 @@ class CustomerService(
         customer
             .takeIf { customerRepository.existsById(it.id!!) }
             ?.let { customerRepository.save(it) }
-            ?: throw RuntimeException("Customer Not Found!")
+            ?: throw CustomerNotFoundException()
 
     fun deleteCustomer(id: Int) =
         id
             .takeIf { customerRepository.existsById(id) }
             ?.let { customerRepository.deleteById(it) }
-            ?: throw RuntimeException("Customer Not Found!")
+            ?: throw CustomerNotFoundException()
 }
