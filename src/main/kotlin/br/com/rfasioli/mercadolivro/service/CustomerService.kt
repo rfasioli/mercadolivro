@@ -1,30 +1,34 @@
 package br.com.rfasioli.mercadolivro.service
 
+import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
-import br.com.rfasioli.mercadolivro.service.mapper.merge
+import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService {
-
-    val customers = mutableListOf<CustomerModel>()
+class CustomerService(
+    val customerRepository: CustomerRepository
+) {
 
     fun getAllCustomer(name: String?): List<CustomerModel> =
-        name?.let { customers.filter { it.name.contains(name, true) } }
-            ?: customers
+        name?.let { customerRepository.findByNameContaining(name).toList() }
+            ?: customerRepository.findAll().toList()
 
-    fun getCustomer(id: String): CustomerModel =
-        customers.first { it.id == id }
+    fun getCustomer(id: Int): CustomerModel =
+        customerRepository.findById(id).get()
 
     fun createCustomer(customer: CustomerModel) =
-        customer
-            .also { it.id = (customers.size + 1).toString() }
-            .run { customers.add(this) }
+        customerRepository.save(customer)
 
     fun updateCustomer(customer: CustomerModel) =
-        customers.filter { it.id == customer.id }
-            .map { it.merge(customer) }
+        customer
+            .takeIf { customerRepository.existsById(it.id!!) }
+            ?.let { customerRepository.save(it) }
+            ?: throw CustomerNotFoundException()
 
-    fun deleteCustomer(id: String) =
-        customers.removeIf { it.id == id }
+    fun deleteCustomer(id: Int) =
+        id
+            .takeIf { customerRepository.existsById(id) }
+            ?.let { customerRepository.deleteById(it) }
+            ?: throw CustomerNotFoundException()
 }
