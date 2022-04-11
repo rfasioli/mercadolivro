@@ -6,6 +6,8 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.6.20"
     kotlin("plugin.spring") version "1.6.20"
+    kotlin("plugin.jpa") version "1.6.20"
+
     id("io.gitlab.arturbosch.detekt") version "1.20.0-RC2"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
