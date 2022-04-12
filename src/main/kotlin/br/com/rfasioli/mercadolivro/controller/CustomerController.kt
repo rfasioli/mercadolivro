@@ -24,15 +24,11 @@ class CustomerController(
 ) {
 
     @GetMapping
-    fun getAllCustomer(
-        @RequestParam name: String?
-    ): List<CustomerModel> =
+    fun getAllCustomer(@RequestParam name: String?): List<CustomerModel> =
         customerService.getAllCustomer(name)
 
     @GetMapping("/{id}")
-    fun getCustomer(
-        @PathVariable id: Int
-    ): CustomerModel =
+    fun getCustomer(@PathVariable id: Int): CustomerModel =
         customerService.getCustomer(id)
 
     @PostMapping
