@@ -1,6 +1,7 @@
 package br.com.rfasioli.mercadolivro.model
 
 import br.com.rfasioli.mercadolivro.enums.BookStatus
+import br.com.rfasioli.mercadolivro.exception.InvalidBookStatusChangeException
 import java.math.BigDecimal
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -11,7 +12,6 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
-import br.com.rfasioli.mercadolivro.exception.InvalidBookStatusChangeException
 
 @Entity(name = "book")
 data class BookModel(
@@ -37,7 +37,7 @@ data class BookModel(
         price: BigDecimal,
         customer: CustomerModel? = null,
         status: BookStatus? = null
-    ): this(id, title, price, customer) {
+    ) : this(id, title, price, customer) {
         this.status = status
     }
 

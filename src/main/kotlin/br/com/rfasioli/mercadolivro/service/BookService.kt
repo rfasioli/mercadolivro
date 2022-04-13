@@ -11,7 +11,7 @@ class BookService(
     val bookRepository: BookRepository,
 ) {
 
-    fun create(book: BookModel) : BookModel =
+    fun create(book: BookModel): BookModel =
         bookRepository.save(book)
 
     fun getAll(title: String?): List<BookModel> =
@@ -24,7 +24,7 @@ class BookService(
     fun getActives(): List<BookModel> =
         bookRepository.findByStatus(BookStatus.ACTIVE)
 
-    fun update(book: BookModel) : BookModel =
+    fun update(book: BookModel): BookModel =
         bookRepository.save(book)
 
     fun deleteById(id: Int) {
@@ -39,6 +39,6 @@ class BookService(
             .let { bookRepository.saveAll(it) }
     }
 
-    private fun changeStatusToDeleted(book: BookModel) : BookModel =
+    private fun changeStatusToDeleted(book: BookModel): BookModel =
         book.also { it.status = BookStatus.DELETED }
 }

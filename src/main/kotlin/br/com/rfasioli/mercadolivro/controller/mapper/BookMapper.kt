@@ -26,4 +26,3 @@ fun PutBookRequest.toModel(previous: BookModel): BookModel =
 
 fun BookModel.toBookResponse(): BookResponse =
     BookResponse(id, title, price, customer, status)
-
