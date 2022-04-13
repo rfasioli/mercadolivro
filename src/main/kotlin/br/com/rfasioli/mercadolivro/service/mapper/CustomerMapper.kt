@@ -6,5 +6,6 @@ fun CustomerModel.merge(model: CustomerModel): CustomerModel {
     val merged = this
     merged.name = model.name
     merged.email = model.email
+    merged.status = model.status
     return merged
 }

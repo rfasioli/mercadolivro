@@ -1,9 +1,10 @@
 package br.com.rfasioli.mercadolivro.controller
 
+import br.com.rfasioli.mercadolivro.controller.mapper.toCustomerResponse
 import br.com.rfasioli.mercadolivro.controller.mapper.toModel
 import br.com.rfasioli.mercadolivro.controller.request.PostCustomerRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutCustomerRequest
-import br.com.rfasioli.mercadolivro.model.CustomerModel
+import br.com.rfasioli.mercadolivro.controller.response.CustomerResponse
 import br.com.rfasioli.mercadolivro.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -24,28 +25,33 @@ class CustomerController(
 ) {
 
     @GetMapping
-    fun getAllCustomer(@RequestParam name: String?): List<CustomerModel> =
+    fun getAllCustomer(@RequestParam name: String?): List<CustomerResponse> =
         customerService.getAllCustomer(name)
+            .map { it.toCustomerResponse() }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): CustomerModel =
+    fun getCustomer(@PathVariable id: Int): CustomerResponse =
         customerService.getCustomer(id)
+            .toCustomerResponse()
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createCustomer(@RequestBody customer: PostCustomerRequest) =
+    fun createCustomer(@RequestBody customer: PostCustomerRequest): CustomerResponse =
         customerService.createCustomer(customer.toModel())
+            .toCustomerResponse()
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     fun updateCustomer(
         @PathVariable id: Int,
         @RequestBody customer: PutCustomerRequest
-    ) =
-        customerService.updateCustomer(customer.toModel(id))
+    ): CustomerResponse =
+        customerService.getCustomer(id)
+            .let { customerService.updateCustomer(customer.toModel(it)) }
+            .toCustomerResponse()
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     fun deleteCustomer(@PathVariable id: Int) =
         customerService.deleteCustomer(id)
 }

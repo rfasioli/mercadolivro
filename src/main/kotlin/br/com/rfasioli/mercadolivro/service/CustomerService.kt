@@ -1,5 +1,6 @@
 package br.com.rfasioli.mercadolivro.service
 
+import br.com.rfasioli.mercadolivro.enums.CustomerStatus
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
@@ -7,7 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(
-    val customerRepository: CustomerRepository
+    val customerRepository: CustomerRepository,
+    val bookService: BookService
 ) {
 
     fun getAllCustomer(name: String?): List<CustomerModel> =
@@ -26,9 +28,11 @@ class CustomerService(
             ?.let { customerRepository.save(it) }
             ?: throw CustomerNotFoundException()
 
-    fun deleteCustomer(id: Int) =
-        id
-            .takeIf { customerRepository.existsById(id) }
-            ?.let { customerRepository.deleteById(it) }
-            ?: throw CustomerNotFoundException()
+    fun deleteCustomer(id: Int) {
+        customerRepository.findById(id)
+            .orElseThrow { CustomerNotFoundException() }
+            .also { bookService.deleteByCustomer(it) }
+            .also { it.status = CustomerStatus.INACTIVE }
+            .let { updateCustomer(it) }
+    }
 }

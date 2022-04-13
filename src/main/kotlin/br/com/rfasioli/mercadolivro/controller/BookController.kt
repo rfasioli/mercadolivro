@@ -1,9 +1,10 @@
 package br.com.rfasioli.mercadolivro.controller
 
+import br.com.rfasioli.mercadolivro.controller.mapper.toBookResponse
 import br.com.rfasioli.mercadolivro.controller.mapper.toModel
 import br.com.rfasioli.mercadolivro.controller.request.PostBookRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutBookRequest
-import br.com.rfasioli.mercadolivro.model.BookModel
+import br.com.rfasioli.mercadolivro.controller.response.BookResponse
 import br.com.rfasioli.mercadolivro.service.BookService
 import br.com.rfasioli.mercadolivro.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -27,35 +28,40 @@ class BookController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: PostBookRequest) =
+    fun create(@RequestBody request: PostBookRequest): BookResponse =
         request.customerId
             .let { customerService.getCustomer(it) }
             .let { request.toModel(it) }
             .let { bookService.create(it) }
+            .toBookResponse()
 
     @GetMapping
-    fun getAll(@RequestParam title: String?): List<BookModel> =
+    fun getAll(@RequestParam title: String?): List<BookResponse> =
         bookService.getAll(title)
+            .map { it.toBookResponse() }
 
     @GetMapping("/active")
-    fun getActives(): List<BookModel> =
+    fun getActives(): List<BookResponse> =
         bookService.getActives()
+            .map { it.toBookResponse() }
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Int): BookModel =
+    fun getById(@PathVariable id: Int): BookResponse =
         bookService.getById(id)
+            .toBookResponse()
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(@PathVariable id: Int): BookModel =
+    fun deleteById(@PathVariable id: Int) =
         bookService.deleteById(id)
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun getById(
+    fun updateById(
         @PathVariable id: Int,
         @RequestBody book: PutBookRequest
-    ) =
+    ): BookResponse =
         bookService.getById(id)
             .let { bookService.update(book.toModel(it)) }
+            .toBookResponse()
 }
