@@ -1,6 +1,7 @@
 package br.com.rfasioli.mercadolivro.model
 
 import br.com.rfasioli.mercadolivro.enums.BookStatus
+import br.com.rfasioli.mercadolivro.exception.InvalidBookStatusChangeException
 import java.math.BigDecimal
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -24,12 +25,28 @@ data class BookModel(
     @Column
     var price: BigDecimal,
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    var status: BookStatus,
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     var customer: CustomerModel? = null
 
-)
+) {
+
+    constructor(
+        id: Int? = null,
+        title: String,
+        price: BigDecimal,
+        customer: CustomerModel? = null,
+        status: BookStatus? = null
+    ) : this(id, title, price, customer) {
+        this.status = status
+    }
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    var status: BookStatus? = null
+        set(value) {
+            field.takeUnless { it == BookStatus.DELETED || it == BookStatus.CANCELED }
+                .also { field = value }
+                ?: throw InvalidBookStatusChangeException()
+        }
+}
