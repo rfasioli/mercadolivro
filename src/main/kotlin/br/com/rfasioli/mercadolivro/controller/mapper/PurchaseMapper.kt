@@ -17,7 +17,7 @@ class PurchaseMapper(
             .takeIf { it.any() }
             ?.let {
                 PurchaseModel(
-                    customer = customerService.getCustomer(request.customerId),
+                    customer = customerService.getActiveCustomer(request.customerId),
                     books = it.toMutableSet(),
                     price = it.sumOf { book -> book.price }
                 )
