@@ -16,7 +16,7 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
-@Entity(name = "book")
+@Entity(name = "purchase")
 @EntityListeners(AuditingEntityListener::class)
 data class PurchaseModel(
     @Id
