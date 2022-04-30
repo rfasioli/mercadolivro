@@ -62,4 +62,17 @@ class DefaultControllerAdvice {
             ),
             HttpStatus.BAD_REQUEST
         )
+
+    @ExceptionHandler(Exception::class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    fun handleHttpMessageNotReadableException(
+        exception: Exception
+    ): ResponseEntity<ErrorResponse> =
+        ResponseEntity(
+            ErrorResponse(
+                message = exception.message,
+                code = exception::class.simpleName
+            ),
+            HttpStatus.INTERNAL_SERVER_ERROR
+        )
 }

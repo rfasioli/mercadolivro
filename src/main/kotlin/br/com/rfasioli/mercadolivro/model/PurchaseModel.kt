@@ -33,19 +33,20 @@ data class PurchaseModel(
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")]
     )
-    val books: List<BookModel>,
+    val books: Set<BookModel>,
 
     @Column
-    val nfe: String,
+    val nfe: String? = null,
 
     @Column
     val price: BigDecimal,
 
-    @Column(name = "created_at")
     @CreatedDate
-    val createdAt: LocalDateTime,
+    @Column(name = "created_at")
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+//    val createdAt: LocalDateTime? = null,
 
-    @Column(name = "updated_at")
     @LastModifiedDate
-    val updatedAt: LocalDateTime
+    @Column(name = "updated_at")
+    val updatedAt: LocalDateTime? = null
 )

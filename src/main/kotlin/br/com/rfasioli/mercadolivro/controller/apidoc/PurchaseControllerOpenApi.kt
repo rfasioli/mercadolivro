@@ -1,6 +1,7 @@
 package br.com.rfasioli.mercadolivro.controller.apidoc
 
 import br.com.rfasioli.mercadolivro.controller.request.PostPurchaseRequest
+import br.com.rfasioli.mercadolivro.model.PurchaseModel
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 
