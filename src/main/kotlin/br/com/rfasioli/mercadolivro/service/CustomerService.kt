@@ -17,7 +17,7 @@ class CustomerService(
             ?: customerRepository.findAll().toList()
 
     fun getCustomer(id: Int): CustomerModel =
-        customerRepository.findById(id).get()
+        customerRepository.findById(id).orElseThrow { CustomerNotFoundException(id) }
 
     fun createCustomer(customer: CustomerModel) =
         customerRepository.save(customer)
@@ -26,11 +26,11 @@ class CustomerService(
         customer
             .takeIf { customerRepository.existsById(it.id!!) }
             ?.let { customerRepository.save(it) }
-            ?: throw CustomerNotFoundException()
+            ?: throw CustomerNotFoundException(customer.id!!)
 
     fun deleteCustomer(id: Int) {
         customerRepository.findById(id)
-            .orElseThrow { CustomerNotFoundException() }
+            .orElseThrow { CustomerNotFoundException(id) }
             .also { bookService.deleteByCustomer(it) }
             .also { it.status = CustomerStatus.INACTIVE }
             .let { updateCustomer(it) }
