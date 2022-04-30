@@ -7,6 +7,9 @@ import br.com.rfasioli.mercadolivro.controller.request.PutBookRequest
 import br.com.rfasioli.mercadolivro.controller.response.BookResponse
 import br.com.rfasioli.mercadolivro.service.BookService
 import br.com.rfasioli.mercadolivro.service.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -36,13 +39,18 @@ class BookController(
             .toBookResponse()
 
     @GetMapping
-    fun getAll(@RequestParam title: String?): List<BookResponse> =
-        bookService.getAll(title)
+    fun getAll(
+        @RequestParam title: String?,
+        @PageableDefault(page = 0, size = 10) pageable: Pageable
+    ): Page<BookResponse> =
+        bookService.getAll(title, pageable)
             .map { it.toBookResponse() }
 
     @GetMapping("/active")
-    fun getActives(): List<BookResponse> =
-        bookService.getActives()
+    fun getActives(
+        @PageableDefault(page = 0, size = 10) pageable: Pageable
+    ): Page<BookResponse> =
+        bookService.getActives(pageable)
             .map { it.toBookResponse() }
 
     @GetMapping("/{id}")

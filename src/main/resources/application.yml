@@ -9,3 +9,6 @@ spring:
     username: root
     password: example
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jackson:
+    default-property-inclusion: non_null
