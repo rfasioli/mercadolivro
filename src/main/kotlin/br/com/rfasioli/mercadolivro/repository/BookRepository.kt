@@ -3,10 +3,12 @@ package br.com.rfasioli.mercadolivro.repository
 import br.com.rfasioli.mercadolivro.enums.BookStatus
 import br.com.rfasioli.mercadolivro.model.BookModel
 import br.com.rfasioli.mercadolivro.model.CustomerModel
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface BookRepository : CrudRepository<BookModel, Int> {
-    fun findByTitleContaining(title: String): Iterable<BookModel>
-    fun findByStatus(ativo: BookStatus): List<BookModel>
-    fun findByCustomer(customer: CustomerModel): List<BookModel>
+interface BookRepository : JpaRepository<BookModel, Int> {
+    fun findByTitleContaining(title: String, pageable: Pageable): Page<BookModel>
+    fun findByStatus(ativo: BookStatus, pageable: Pageable): Page<BookModel>
+    fun findByCustomer(customer: CustomerModel): Iterable<BookModel>
 }
