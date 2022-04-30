@@ -15,7 +15,7 @@ group = "br.com.rfasioli"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-val flywayVersion = "8.5.8"
+val flywayVersion = "8.5.10"
 
 repositories {
     mavenCentral()
