@@ -16,8 +16,8 @@ class PurchaseMapper(
             .let {
                 PurchaseModel(
                     customer = customerService.getCustomer(request.customerId),
-                    books = it,
+                    books = it.toMutableSet(),
                     price = it.sumOf { book -> book.price }
                 )
-    }
+            }
 }

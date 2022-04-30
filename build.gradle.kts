@@ -54,7 +54,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:$flywayVersion")
     implementation("org.flywaydb:flyway-mysql:$flywayVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
+    implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
 
     runtimeOnly("mysql:mysql-connector-java")
 
@@ -88,13 +88,13 @@ tasks.withType<Test> {
     )
 }
 
-//java.sourceCompatibility = JavaVersion.VERSION_17
+// java.sourceCompatibility = JavaVersion.VERSION_17
 //
-//configurations {
+// configurations {
 //    compileOnly {
 //        extendsFrom(configurations.annotationProcessor.get())
 //    }
-//}
+// }
 
 detekt {
     config = files("$projectDir/config/detekt/style-config.yml")

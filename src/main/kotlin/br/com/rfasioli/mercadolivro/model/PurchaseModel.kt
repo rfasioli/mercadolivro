@@ -1,5 +1,8 @@
 package br.com.rfasioli.mercadolivro.model
 
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.Column
@@ -12,9 +15,6 @@ import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
 @Entity(name = "purchase")
 @EntityListeners(AuditingEntityListener::class)
@@ -33,7 +33,7 @@ data class PurchaseModel(
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")]
     )
-    val books: Set<BookModel>,
+    val books: MutableSet<BookModel>,
 
     @Column
     val nfe: String? = null,

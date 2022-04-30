@@ -48,4 +48,10 @@ class BookService(
     fun findByIds(bookIds: Set<Int>): Set<BookModel> =
         bookRepository.findAllById(bookIds.toList()).toSet()
 
+    fun purchase(books: MutableSet<BookModel>) {
+        books.forEach {
+            it.status = BookStatus.SOLD
+            bookRepository.save(it)
+        }
+    }
 }

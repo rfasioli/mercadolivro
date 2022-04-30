@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class PurchaseController(
     private val purchaseService: PurchaseService,
     private val purchaseMapper: PurchaseMapper
-): PurchaseControllerOpenApi {
+) : PurchaseControllerOpenApi {
 
     @PostMapping
     override fun createPurchase(

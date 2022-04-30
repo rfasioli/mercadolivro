@@ -1,7 +1,5 @@
 package br.com.rfasioli.mercadolivro.service
 
-import br.com.rfasioli.mercadolivro.controller.mapper.toCustomerResponse
-import br.com.rfasioli.mercadolivro.controller.response.CustomerResponse
 import br.com.rfasioli.mercadolivro.enums.CustomerStatus
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
