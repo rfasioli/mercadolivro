@@ -1,6 +1,6 @@
 package br.com.rfasioli.mercadolivro.exception
 
-class InvalidBookStatusChangeException : RuntimeException {
+class InvalidBookStatusChangeException : BadRequestException {
 
     companion object {
         const val MESSAGE: String = "Invalid Book Status Change"
