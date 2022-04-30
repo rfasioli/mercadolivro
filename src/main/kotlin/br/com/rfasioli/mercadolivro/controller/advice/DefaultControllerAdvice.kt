@@ -7,12 +7,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.context.request.WebRequest
 
 @ControllerAdvice
 class DefaultControllerAdvice {
     @ExceptionHandler(NotFoundException::class)
-    fun handleNotFoundException(exception: NotFoundException, request: WebRequest): ResponseEntity<ErrorResponse> =
+    fun handleNotFoundException(exception: NotFoundException): ResponseEntity<ErrorResponse> =
         ResponseEntity(
             ErrorResponse(
                 message = exception.message,
@@ -22,7 +21,7 @@ class DefaultControllerAdvice {
         )
 
     @ExceptionHandler(BadRequestException::class)
-    fun handleBadRequestException(exception: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse> =
+    fun handleBadRequestException(exception: BadRequestException): ResponseEntity<ErrorResponse> =
         ResponseEntity(
             ErrorResponse(
                 message = exception.message,
