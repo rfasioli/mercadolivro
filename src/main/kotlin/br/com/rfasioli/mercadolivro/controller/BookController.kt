@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("books")
@@ -31,7 +32,7 @@ class BookController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: PostBookRequest): BookResponse =
+    fun create(@RequestBody @Valid request: PostBookRequest): BookResponse =
         request.customerId
             .let { customerService.getCustomer(it) }
             .let { request.toModel(it) }
@@ -67,7 +68,7 @@ class BookController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun updateById(
         @PathVariable id: Int,
-        @RequestBody book: PutBookRequest
+        @Valid @RequestBody book: PutBookRequest
     ): BookResponse =
         bookService.getById(id)
             .let { bookService.update(book.toModel(it)) }
