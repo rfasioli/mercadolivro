@@ -18,32 +18,35 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
+import br.com.rfasioli.mercadolivro.controller.apidoc.CustomerControllerOpenApi
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @RestController
 @RequestMapping("customers")
 class CustomerController(
     val customerService: CustomerService
-) {
+): CustomerControllerOpenApi {
 
     @GetMapping
-    fun getAllCustomer(@RequestParam name: String?): List<CustomerResponse> =
-        customerService.getAllCustomer(name)
+    override fun getAllCustomer(@RequestParam name: String?, pageable: Pageable): Page<CustomerResponse> =
+        customerService.getAllCustomer(name, pageable)
             .map { it.toCustomerResponse() }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): CustomerResponse =
+    override fun getCustomer(@PathVariable id: Int): CustomerResponse =
         customerService.getCustomer(id)
             .toCustomerResponse()
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createCustomer(@RequestBody @Valid customer: PostCustomerRequest): CustomerResponse =
+    override fun createCustomer(@RequestBody @Valid customer: PostCustomerRequest): CustomerResponse =
         customerService.createCustomer(customer.toModel())
             .toCustomerResponse()
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    fun updateCustomer(
+    override fun updateCustomer(
         @PathVariable id: Int,
         @Valid @RequestBody customer: PutCustomerRequest
     ): CustomerResponse =
@@ -53,6 +56,6 @@ class CustomerController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    fun deleteCustomer(@PathVariable id: Int) =
+    override fun deleteCustomer(@PathVariable id: Int) =
         customerService.deleteCustomer(id)
 }
