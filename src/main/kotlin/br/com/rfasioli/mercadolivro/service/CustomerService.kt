@@ -1,9 +1,13 @@
 package br.com.rfasioli.mercadolivro.service
 
+import br.com.rfasioli.mercadolivro.controller.mapper.toCustomerResponse
+import br.com.rfasioli.mercadolivro.controller.response.CustomerResponse
 import br.com.rfasioli.mercadolivro.enums.CustomerStatus
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,9 +16,9 @@ class CustomerService(
     val bookService: BookService
 ) {
 
-    fun getAllCustomer(name: String?): List<CustomerModel> =
-        name?.let { customerRepository.findByNameContaining(name).toList() }
-            ?: customerRepository.findAll().toList()
+    fun getAllCustomer(name: String?, pageable: Pageable): Page<CustomerModel> =
+        name?.let { customerRepository.findByNameContaining(name, pageable) }
+            ?: customerRepository.findAll(pageable)
 
     fun getCustomer(id: Int): CustomerModel =
         customerRepository.findById(id).orElseThrow { CustomerNotFoundException(id) }

@@ -22,17 +22,18 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
+import br.com.rfasioli.mercadolivro.controller.apidoc.BookControllerOpenApi
 
 @RestController
 @RequestMapping("books")
 class BookController(
     val bookService: BookService,
     val customerService: CustomerService
-) {
+) : BookControllerOpenApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid request: PostBookRequest): BookResponse =
+    override fun create(@RequestBody @Valid request: PostBookRequest): BookResponse =
         request.customerId
             .let { customerService.getCustomer(it) }
             .let { request.toModel(it) }
@@ -40,7 +41,7 @@ class BookController(
             .toBookResponse()
 
     @GetMapping
-    fun getAll(
+    override fun getAll(
         @RequestParam title: String?,
         @PageableDefault(page = 0, size = 10) pageable: Pageable
     ): Page<BookResponse> =
@@ -48,25 +49,25 @@ class BookController(
             .map { it.toBookResponse() }
 
     @GetMapping("/active")
-    fun getActives(
+    override fun getActives(
         @PageableDefault(page = 0, size = 10) pageable: Pageable
     ): Page<BookResponse> =
         bookService.getActives(pageable)
             .map { it.toBookResponse() }
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Int): BookResponse =
+    override fun getById(@PathVariable id: Int): BookResponse =
         bookService.getById(id)
             .toBookResponse()
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(@PathVariable id: Int) =
+    override fun deleteById(@PathVariable id: Int) =
         bookService.deleteById(id)
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun updateById(
+    override fun updateById(
         @PathVariable id: Int,
         @Valid @RequestBody book: PutBookRequest
     ): BookResponse =

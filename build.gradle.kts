@@ -16,6 +16,8 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val flywayVersion = "8.5.10"
+val springDocVersion = "1.6.8"
+val h2Version = "2.1.212"
 
 repositories {
     mavenCentral()
@@ -34,13 +36,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
+    implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
+    implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
     implementation("org.flywaydb:flyway-core:$flywayVersion")
     implementation("org.flywaydb:flyway-mysql:$flywayVersion")
 
     runtimeOnly("mysql:mysql-connector-java")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("com.h2database:h2")
+    testImplementation("com.h2database:h2:$h2Version")
 }
 
 tasks.withType<KotlinCompile> {
