@@ -1,9 +1,12 @@
 package br.com.rfasioli.mercadolivro.service
 
 import br.com.rfasioli.mercadolivro.enums.BookStatus
+import br.com.rfasioli.mercadolivro.exception.BookNotFoundException
 import br.com.rfasioli.mercadolivro.model.BookModel
 import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.BookRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,15 +17,15 @@ class BookService(
     fun create(book: BookModel): BookModel =
         bookRepository.save(book)
 
-    fun getAll(title: String?): List<BookModel> =
-        title?.let { bookRepository.findByTitleContaining(it).toList() }
-            ?: bookRepository.findAll().toList()
+    fun getAll(title: String?, pageable: Pageable): Page<BookModel> =
+        title?.let { bookRepository.findByTitleContaining(it, pageable) }
+            ?: bookRepository.findAll(pageable)
 
     fun getById(id: Int): BookModel =
-        bookRepository.findById(id).get()
+        bookRepository.findById(id).orElseThrow { BookNotFoundException(id) }
 
-    fun getActives(): List<BookModel> =
-        bookRepository.findByStatus(BookStatus.ACTIVE)
+    fun getActives(pageable: Pageable): Page<BookModel> =
+        bookRepository.findByStatus(BookStatus.ACTIVE, pageable)
 
     fun update(book: BookModel): BookModel =
         bookRepository.save(book)
