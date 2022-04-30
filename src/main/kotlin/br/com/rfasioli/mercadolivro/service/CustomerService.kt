@@ -35,4 +35,7 @@ class CustomerService(
             .also { it.status = CustomerStatus.INACTIVE }
             .let { updateCustomer(it) }
     }
+
+    fun emailAvailable(email: String): Boolean =
+        !customerRepository.existsByEmail(email)
 }
