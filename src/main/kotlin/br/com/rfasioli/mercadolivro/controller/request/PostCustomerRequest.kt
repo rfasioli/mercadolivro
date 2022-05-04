@@ -11,5 +11,8 @@ data class PostCustomerRequest(
 
     @field:Email(message = "Email must be valid")
     @EmailAvailable
-    val email: String
+    val email: String,
+
+    @field:NotEmpty(message = "Password required")
+    val password: String
 )

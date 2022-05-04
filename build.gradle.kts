@@ -45,6 +45,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-undertow")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     implementation("org.springframework.cloud:spring-cloud-starter")
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
@@ -60,6 +61,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.h2database:h2:$h2Version")
+    testImplementation("org.springframework.security:spring-security-test")
 }
 
 dependencyManagement {

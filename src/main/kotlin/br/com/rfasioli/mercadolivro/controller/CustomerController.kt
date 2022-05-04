@@ -25,6 +25,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("customers")
 class CustomerController(
+
     val customerService: CustomerService
 ) : CustomerControllerOpenApi {
 
