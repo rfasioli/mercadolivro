@@ -11,4 +11,5 @@ interface BookRepository : JpaRepository<BookModel, Int> {
     fun findByTitleContaining(title: String, pageable: Pageable): Page<BookModel>
     fun findByStatus(ativo: BookStatus, pageable: Pageable): Page<BookModel>
     fun findByCustomer(customer: CustomerModel): Iterable<BookModel>
+    fun findByIdInAndStatus(ids: List<Int>, status: BookStatus): Iterable<BookModel>
 }

@@ -44,4 +44,14 @@ class BookService(
 
     private fun changeStatusToDeleted(book: BookModel): BookModel =
         book.also { it.status = BookStatus.DELETED }
+
+    fun findByIds(bookIds: Set<Int>): Set<BookModel> =
+        bookRepository.findByIdInAndStatus(bookIds.toList(), BookStatus.ACTIVE).toSet()
+
+    fun purchase(books: MutableSet<BookModel>) {
+        books.forEach {
+            it.status = BookStatus.SOLD
+            bookRepository.save(it)
+        }
+    }
 }

@@ -1,5 +1,8 @@
 package br.com.rfasioli.mercadolivro.model
 
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.Column
@@ -12,11 +15,8 @@ import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
-@Entity(name = "book")
+@Entity(name = "purchase")
 @EntityListeners(AuditingEntityListener::class)
 data class PurchaseModel(
     @Id
@@ -33,19 +33,20 @@ data class PurchaseModel(
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")]
     )
-    val books: List<BookModel>,
+    val books: MutableSet<BookModel>,
 
     @Column
-    val nfe: String,
+    val nfe: String? = null,
 
     @Column
     val price: BigDecimal,
 
-    @Column(name = "created_at")
     @CreatedDate
-    val createdAt: LocalDateTime,
+    @Column(name = "created_at")
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+//    val createdAt: LocalDateTime? = null,
 
-    @Column(name = "updated_at")
     @LastModifiedDate
-    val updatedAt: LocalDateTime
+    @Column(name = "updated_at")
+    val updatedAt: LocalDateTime? = null
 )

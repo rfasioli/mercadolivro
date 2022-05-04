@@ -1,5 +1,6 @@
 package br.com.rfasioli.mercadolivro.controller
 
+import br.com.rfasioli.mercadolivro.controller.apidoc.BookControllerOpenApi
 import br.com.rfasioli.mercadolivro.controller.mapper.toBookResponse
 import br.com.rfasioli.mercadolivro.controller.mapper.toModel
 import br.com.rfasioli.mercadolivro.controller.request.PostBookRequest
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
-import br.com.rfasioli.mercadolivro.controller.apidoc.BookControllerOpenApi
 
 @RestController
 @RequestMapping("books")

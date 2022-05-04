@@ -1,7 +1,5 @@
 package br.com.rfasioli.mercadolivro.service
 
-import br.com.rfasioli.mercadolivro.controller.mapper.toCustomerResponse
-import br.com.rfasioli.mercadolivro.controller.response.CustomerResponse
 import br.com.rfasioli.mercadolivro.enums.CustomerStatus
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
@@ -21,7 +19,12 @@ class CustomerService(
             ?: customerRepository.findAll(pageable)
 
     fun getCustomer(id: Int): CustomerModel =
-        customerRepository.findById(id).orElseThrow { CustomerNotFoundException(id) }
+        customerRepository.findById(id)
+            .orElseThrow { CustomerNotFoundException(id) }
+
+    fun getActiveCustomer(id: Int): CustomerModel =
+        customerRepository.findByIdAndStatus(id, CustomerStatus.ACTIVE)
+            .orElseThrow { CustomerNotFoundException(id) }
 
     fun createCustomer(customer: CustomerModel) =
         customerRepository.save(customer)
