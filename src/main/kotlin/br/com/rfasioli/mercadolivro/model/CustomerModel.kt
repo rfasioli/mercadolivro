@@ -1,7 +1,8 @@
 package br.com.rfasioli.mercadolivro.model
 
-import javax.persistence.CollectionTable
 import br.com.rfasioli.mercadolivro.enums.CustomerStatus
+import br.com.rfasioli.mercadolivro.enums.Profile
+import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
@@ -12,7 +13,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
-import br.com.rfasioli.mercadolivro.enums.Profile
 
 @Entity(name = "customer")
 data class CustomerModel(
