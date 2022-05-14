@@ -1,7 +1,7 @@
 package br.com.rfasioli.mercadolivro.service
 
 import br.com.rfasioli.mercadolivro.enums.CustomerStatus
-import br.com.rfasioli.mercadolivro.enums.Profile
+import br.com.rfasioli.mercadolivro.enums.Role
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
@@ -32,7 +32,7 @@ class CustomerService(
     fun createCustomer(customer: CustomerModel) =
         customer
             .copy(
-                roles = setOf(Profile.CUSTOMER),
+                roles = setOf(Role.CUSTOMER),
                 password = bcrypt.encode(customer.password)
             )
             .let { customerRepository.save(it) }
