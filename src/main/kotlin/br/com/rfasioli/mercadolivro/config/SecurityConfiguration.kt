@@ -3,7 +3,6 @@ package br.com.rfasioli.mercadolivro.config
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import br.com.rfasioli.mercadolivro.security.AuthenticationFilter
 import br.com.rfasioli.mercadolivro.service.UserDetailsCustomService
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -21,14 +20,14 @@ class SecurityConfiguration(
     private val bCryptPasswordEncoder: BCryptPasswordEncoder
 ) : WebSecurityConfigurerAdapter() {
 
-    private val PUBLIC_POST_MATCHERS = arrayOf("/customers")
+    private final val publicPostMatchers = arrayOf("/customers")
 
     override fun configure(http: HttpSecurity) {
         http.cors().and()
             .csrf().disable()
 
         http.authorizeRequests()
-            .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll()
+            .antMatchers(HttpMethod.POST, *publicPostMatchers).permitAll()
             .anyRequest().authenticated()
 
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository))

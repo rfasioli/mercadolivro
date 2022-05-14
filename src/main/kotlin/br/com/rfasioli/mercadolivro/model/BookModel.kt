@@ -45,7 +45,7 @@ data class BookModel(
     @Enumerated(EnumType.STRING)
     var status: BookStatus? = null
         set(value) {
-            if ( field == BookStatus.DELETED || field == BookStatus.CANCELED ) {
+            if (field == BookStatus.DELETED || field == BookStatus.CANCELED) {
                 throw InvalidBookStatusChangeException()
             }
             field = value

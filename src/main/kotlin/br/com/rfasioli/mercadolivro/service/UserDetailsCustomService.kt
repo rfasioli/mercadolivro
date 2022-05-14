@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service
 @Service
 class UserDetailsCustomService(
     private val customerRepository: CustomerRepository
-): UserDetailsService {
+) : UserDetailsService {
     override fun loadUserByUsername(id: String): UserDetails =
         customerRepository.findById(id.toInt())
-            .orElseThrow{ AuthenticationException("User not found") }
+            .orElseThrow { AuthenticationException("User not found") }
             .let { UserCustomDetails(it) }
 }
