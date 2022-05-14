@@ -25,6 +25,7 @@ val springDocVersion = "1.6.8"
 val h2Version = "2.1.212"
 val kotlinLoggingVersion = "2.1.21"
 val springCloudVersion = "2021.0.2"
+val jwtVersion = "0.2"
 
 repositories {
     mavenCentral()
@@ -59,6 +60,7 @@ dependencies {
     implementation("org.flywaydb:flyway-mysql:$flywayVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
+    implementation("io.jsonwebtoken:jjwt:$jwtVersion")
 
     runtimeOnly("mysql:mysql-connector-java")
 

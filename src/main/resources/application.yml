@@ -12,3 +12,7 @@ spring:
 
   jackson:
     default-property-inclusion: non_null
+
+jwt:
+  secret: )fbGA"<a.&8QRH/u%r~L:zocl$I9:gvVVHz"Z_@wqF<_wYe(z+zi=lw9lW>4+qQ/<B7AY}VWZ7OJ:(3dN*vIR-40'"R}o\,=S<-+70/lqc(v%zNn@wkq1j!*Y'CAfgr#&H`B`x^Vr&W4:wU3-9:O^1$F!r8mngxVvPa\m4!855*g%)R6.,lJ^~|I!"IL+K{yC#0TH/%,Xo\"Pb:h;1abZwP?\5!2]8~6>$pkSvSG,<pi\QK,8ai03cq]`MN&5l5x
+  expiration: 999999
