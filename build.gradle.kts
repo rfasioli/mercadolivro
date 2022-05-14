@@ -50,6 +50,9 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter")
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 
+    implementation("org.springframework.cloud:spring-cloud-starter")
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+
     implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
     implementation("org.flywaydb:flyway-core:$flywayVersion")
@@ -62,6 +65,15 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.h2database:h2:$h2Version")
     testImplementation("org.springframework.security:spring-security-test")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+    }
+}
+noArg {
+    annotation("com.lindroid.projectname.annotation.NoArg")
 }
 
 dependencyManagement {
