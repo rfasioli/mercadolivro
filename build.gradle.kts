@@ -25,7 +25,7 @@ val springDocVersion = "1.6.8"
 val h2Version = "2.1.212"
 val kotlinLoggingVersion = "2.1.23"
 val springCloudVersion = "2021.0.2"
-val jwtVersion = "0.2"
+val jwtVersion = "0.9.1"
 
 repositories {
     mavenCentral()
