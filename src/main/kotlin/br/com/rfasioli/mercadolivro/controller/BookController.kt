@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
+import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
 
 @RestController
 @RequestMapping("books")
@@ -62,6 +63,7 @@ class BookController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @OnlyAdminCanAccessResource
     override fun deleteById(@PathVariable id: Int) =
         bookService.deleteById(id)
 

@@ -33,6 +33,6 @@ class AuthorizationFilter(
         token.takeIf { jwtUtil.isValidToken(token) }
             ?.let { jwtUtil.getSubject(it) }
             ?.let { userDetails.loadUserByUsername(it) }
-            ?.let { UsernamePasswordAuthenticationToken(it.username, null, it.authorities) }
+            ?.let { UsernamePasswordAuthenticationToken(it, null, it.authorities) }
             ?: throw AuthenticationException("Invalid Token")
 }

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
+import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
+import br.com.rfasioli.mercadolivro.security.annotation.UserCanOnlyAccessTheirOwnResource
 
 @RestController
 @RequestMapping("customers")
@@ -30,11 +32,13 @@ class CustomerController(
 ) : CustomerControllerOpenApi {
 
     @GetMapping
+    @OnlyAdminCanAccessResource
     override fun getAllCustomer(@RequestParam name: String?, pageable: Pageable): Page<CustomerResponse> =
         customerService.getAllCustomer(name, pageable)
             .map { it.toCustomerResponse() }
 
     @GetMapping("/{id}")
+    @UserCanOnlyAccessTheirOwnResource
     override fun getCustomer(@PathVariable id: Int): CustomerResponse =
         customerService.getCustomer(id)
             .toCustomerResponse()
@@ -47,6 +51,7 @@ class CustomerController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @UserCanOnlyAccessTheirOwnResource
     override fun updateCustomer(
         @PathVariable id: Int,
         @Valid @RequestBody customer: PutCustomerRequest
@@ -57,6 +62,7 @@ class CustomerController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @UserCanOnlyAccessTheirOwnResource
     override fun deleteCustomer(@PathVariable id: Int) =
         customerService.deleteCustomer(id)
 }

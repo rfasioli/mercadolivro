@@ -69,6 +69,19 @@ class DefaultControllerAdvice {
             HttpStatus.BAD_REQUEST
         )
 
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException::class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    fun handleHttpMessageNotReadableException(
+        exception: org.springframework.security.access.AccessDeniedException
+    ): ResponseEntity<ErrorResponse> =
+        ResponseEntity(
+            ErrorResponse(
+                message = exception.localizedMessage,
+                code = exception::class.simpleName,
+            ),
+            HttpStatus.FORBIDDEN
+        )
+
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleHttpMessageNotReadableException(
