@@ -1,6 +1,6 @@
 package br.com.rfasioli.mercadolivro.service
 
-import br.com.rfasioli.mercadolivro.security.event.PurchaseEvent
+import br.com.rfasioli.mercadolivro.event.PurchaseEvent
 import br.com.rfasioli.mercadolivro.model.PurchaseModel
 import br.com.rfasioli.mercadolivro.repository.PurchaseRepository
 import org.springframework.context.ApplicationEventPublisher

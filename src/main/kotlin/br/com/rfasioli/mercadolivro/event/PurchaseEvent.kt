@@ -1,4 +1,4 @@
-package br.com.rfasioli.mercadolivro.security.event
+package br.com.rfasioli.mercadolivro.event
 
 import br.com.rfasioli.mercadolivro.model.PurchaseModel
 import org.springframework.context.ApplicationEvent
