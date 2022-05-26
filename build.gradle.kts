@@ -13,7 +13,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.20.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 //    id("jacoco")
-    id("com.gorylenko.gradle-git-properties") version "2.4.0"
+    id("com.gorylenko.gradle-git-properties") version "2.4.1"
 }
 
 group = "br.com.rfasioli"
