@@ -6,6 +6,7 @@ import br.com.rfasioli.mercadolivro.controller.mapper.toModel
 import br.com.rfasioli.mercadolivro.controller.request.PostBookRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutBookRequest
 import br.com.rfasioli.mercadolivro.controller.response.BookResponse
+import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
 import br.com.rfasioli.mercadolivro.service.BookService
 import br.com.rfasioli.mercadolivro.service.CustomerService
 import org.springframework.data.domain.Page
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
-import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
 
 @RestController
 @RequestMapping("books")

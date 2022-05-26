@@ -6,6 +6,8 @@ import br.com.rfasioli.mercadolivro.controller.mapper.toModel
 import br.com.rfasioli.mercadolivro.controller.request.PostCustomerRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutCustomerRequest
 import br.com.rfasioli.mercadolivro.controller.response.CustomerResponse
+import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
+import br.com.rfasioli.mercadolivro.security.annotation.UserCanOnlyAccessTheirOwnResource
 import br.com.rfasioli.mercadolivro.service.CustomerService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -21,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
-import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
-import br.com.rfasioli.mercadolivro.security.annotation.UserCanOnlyAccessTheirOwnResource
 
 @RestController
 @RequestMapping("customers")

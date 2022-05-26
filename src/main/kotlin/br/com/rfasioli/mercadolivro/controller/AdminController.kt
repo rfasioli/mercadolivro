@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("admin")
-class AdminController() {
+class AdminController {
+
+    companion object {
+        private const val MESSAGE = "This is a Report. Only admin can see it!"
+    }
 
     @GetMapping("/report")
-    fun getReport() : String =
-        "This is a Report. Only admin can see it!"
-
+    fun getReport(): String = MESSAGE
 }
