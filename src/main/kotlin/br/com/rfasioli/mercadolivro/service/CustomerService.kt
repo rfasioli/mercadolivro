@@ -1,17 +1,20 @@
 package br.com.rfasioli.mercadolivro.service
 
 import br.com.rfasioli.mercadolivro.enums.CustomerStatus
+import br.com.rfasioli.mercadolivro.enums.Role
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(
-    val customerRepository: CustomerRepository,
-    val bookService: BookService
+    private val customerRepository: CustomerRepository,
+    private val bookService: BookService,
+    private val bcrypt: BCryptPasswordEncoder
 ) {
 
     fun getAllCustomer(name: String?, pageable: Pageable): Page<CustomerModel> =
@@ -27,7 +30,12 @@ class CustomerService(
             .orElseThrow { CustomerNotFoundException(id) }
 
     fun createCustomer(customer: CustomerModel) =
-        customerRepository.save(customer)
+        customer
+            .copy(
+                roles = setOf(Role.CUSTOMER),
+                password = bcrypt.encode(customer.password)
+            )
+            .let { customerRepository.save(it) }
 
     fun updateCustomer(customer: CustomerModel) =
         customer

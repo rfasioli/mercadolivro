@@ -6,6 +6,8 @@ import br.com.rfasioli.mercadolivro.controller.mapper.toModel
 import br.com.rfasioli.mercadolivro.controller.request.PostCustomerRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutCustomerRequest
 import br.com.rfasioli.mercadolivro.controller.response.CustomerResponse
+import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
+import br.com.rfasioli.mercadolivro.security.annotation.UserCanOnlyAccessTheirOwnResource
 import br.com.rfasioli.mercadolivro.service.CustomerService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -25,15 +27,18 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("customers")
 class CustomerController(
+
     val customerService: CustomerService
 ) : CustomerControllerOpenApi {
 
     @GetMapping
+    @OnlyAdminCanAccessResource
     override fun getAllCustomer(@RequestParam name: String?, pageable: Pageable): Page<CustomerResponse> =
         customerService.getAllCustomer(name, pageable)
             .map { it.toCustomerResponse() }
 
     @GetMapping("/{id}")
+    @UserCanOnlyAccessTheirOwnResource
     override fun getCustomer(@PathVariable id: Int): CustomerResponse =
         customerService.getCustomer(id)
             .toCustomerResponse()
@@ -46,6 +51,7 @@ class CustomerController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @UserCanOnlyAccessTheirOwnResource
     override fun updateCustomer(
         @PathVariable id: Int,
         @Valid @RequestBody customer: PutCustomerRequest
@@ -56,6 +62,7 @@ class CustomerController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @UserCanOnlyAccessTheirOwnResource
     override fun deleteCustomer(@PathVariable id: Int) =
         customerService.deleteCustomer(id)
 }

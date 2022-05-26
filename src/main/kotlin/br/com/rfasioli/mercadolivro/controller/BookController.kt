@@ -6,6 +6,7 @@ import br.com.rfasioli.mercadolivro.controller.mapper.toModel
 import br.com.rfasioli.mercadolivro.controller.request.PostBookRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutBookRequest
 import br.com.rfasioli.mercadolivro.controller.response.BookResponse
+import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
 import br.com.rfasioli.mercadolivro.service.BookService
 import br.com.rfasioli.mercadolivro.service.CustomerService
 import org.springframework.data.domain.Page
@@ -62,6 +63,7 @@ class BookController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @OnlyAdminCanAccessResource
     override fun deleteById(@PathVariable id: Int) =
         bookService.deleteById(id)
 

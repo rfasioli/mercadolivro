@@ -1,8 +1,8 @@
-CREATE TABLE `book` (
-  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `title` varchar(255) NOT NULL,
-  `price` decimal(19, 2) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `customer_id` int NOT NULL,
-  FOREIGN KEY (customer_id) REFERENCES customer(id)
-)
+CREATE TABLE book (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  price DECIMAL(19, 2) NOT NULL,
+  status VARCHAR(255) NOT NULL,
+  customer_id INT NOT NULL
+);
+ALTER TABLE book ADD CONSTRAINT custoner_book_fk FOREIGN KEY (customer_id) REFERENCES customer(id);

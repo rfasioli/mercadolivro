@@ -11,7 +11,8 @@ fun PostCustomerRequest.toModel(id: Int? = null): CustomerModel =
         id,
         name,
         email,
-        CustomerStatus.ACTIVE
+        CustomerStatus.ACTIVE,
+        password = this.password
     )
 
 fun PutCustomerRequest.toModel(previous: CustomerModel): CustomerModel =
@@ -19,7 +20,8 @@ fun PutCustomerRequest.toModel(previous: CustomerModel): CustomerModel =
         previous.id,
         name = this.name ?: previous.name,
         email = this.email ?: previous.email,
-        previous.status
+        previous.status,
+        previous.password
     )
 
 fun CustomerModel.toCustomerResponse(): CustomerResponse =
