@@ -4,6 +4,7 @@ import br.com.rfasioli.mercadolivro.enums.Role
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import br.com.rfasioli.mercadolivro.security.AuthenticationFilter
 import br.com.rfasioli.mercadolivro.security.AuthorizationFilter
+import br.com.rfasioli.mercadolivro.security.CustomAuthenticationEntrypoint
 import br.com.rfasioli.mercadolivro.security.JwtUtil
 import br.com.rfasioli.mercadolivro.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
@@ -18,7 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 
@@ -29,14 +29,21 @@ class SecurityConfig(
     private val customerRepository: CustomerRepository,
     private val userDetails: UserDetailsCustomService,
     private val bCryptPasswordEncoder: BCryptPasswordEncoder,
-    private val jwtUtil: JwtUtil
+    private val jwtUtil: JwtUtil,
+    private val customEntrypoint: CustomAuthenticationEntrypoint
 ) : WebSecurityConfigurerAdapter() {
 
     private final val publicMatchers = arrayOf<String>()
     private final val publicPostMatchers = arrayOf("/customers")
     private final val adminMatchers = arrayOf("/admin/**")
 
-    private final var swaggerMatchers = arrayOf("/v3/api-docs.yaml", "/v3/api-docs", "/swagger-ui.html", "/v3/api-docs/swagger-config", "/swagger-ui/index.html")
+    private final var swaggerMatchers = arrayOf(
+        "/v3/api-docs.yaml",
+        "/v3/api-docs",
+        "/swagger-ui.html",
+        "/v3/api-docs/swagger-config",
+        "/swagger-ui/index.html"
+    )
 
     override fun configure(http: HttpSecurity) {
         http.cors().and()
@@ -53,6 +60,8 @@ class SecurityConfig(
 
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        http.exceptionHandling().authenticationEntryPoint(customEntrypoint)
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
@@ -76,3 +85,4 @@ class SecurityConfig(
         source.registerCorsConfiguration("/**", config)
         return CorsFilter(source)
     }
+}
