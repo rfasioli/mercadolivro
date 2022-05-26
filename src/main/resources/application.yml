@@ -2,14 +2,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
-
-  datasource:
-    url: jdbc:mysql://localhost:13306/mercadolivro
-    username: root
-    password: example
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
   jackson:
     default-property-inclusion: non_null
 
