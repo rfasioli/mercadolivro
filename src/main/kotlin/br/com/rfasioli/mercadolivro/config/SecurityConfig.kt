@@ -33,7 +33,6 @@ class SecurityConfig(
     private val customEntrypoint: CustomAuthenticationEntrypoint
 ) : WebSecurityConfigurerAdapter() {
 
-    private final val publicMatchers = arrayOf("")
     private final val publicGetMatchers = arrayOf("/books")
     private final val publicPostMatchers = arrayOf("/customers")
     private final val adminMatchers = arrayOf("/admin/**")
@@ -51,7 +50,6 @@ class SecurityConfig(
             .csrf().disable()
 
         http.authorizeRequests()
-            .antMatchers(*publicMatchers).permitAll()
             .antMatchers(HttpMethod.GET, *publicGetMatchers).permitAll()
             .antMatchers(HttpMethod.POST, *publicPostMatchers).permitAll()
             .antMatchers(*adminMatchers).hasAuthority(Role.ADMIN.description)

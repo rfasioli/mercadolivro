@@ -3,13 +3,14 @@ package br.com.rfasioli.mercadolivro.controller
 import br.com.rfasioli.mercadolivro.controller.apidoc.BookControllerOpenApi
 import br.com.rfasioli.mercadolivro.controller.mapper.toBookResponse
 import br.com.rfasioli.mercadolivro.controller.mapper.toModel
+import br.com.rfasioli.mercadolivro.controller.mapper.toPageResponse
 import br.com.rfasioli.mercadolivro.controller.request.PostBookRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutBookRequest
 import br.com.rfasioli.mercadolivro.controller.response.BookResponse
+import br.com.rfasioli.mercadolivro.controller.response.PageResponse
 import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
 import br.com.rfasioli.mercadolivro.service.BookService
 import br.com.rfasioli.mercadolivro.service.CustomerService
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
@@ -45,16 +46,18 @@ class BookController(
     override fun getAll(
         @RequestParam title: String?,
         @PageableDefault(page = 0, size = 10) pageable: Pageable
-    ): Page<BookResponse> =
+    ): PageResponse<BookResponse> =
         bookService.getAll(title, pageable)
             .map { it.toBookResponse() }
+            .toPageResponse()
 
     @GetMapping("/active")
     override fun getActives(
         @PageableDefault(page = 0, size = 10) pageable: Pageable
-    ): Page<BookResponse> =
+    ): PageResponse<BookResponse> =
         bookService.getActives(pageable)
             .map { it.toBookResponse() }
+            .toPageResponse()
 
     @GetMapping("/{id}")
     override fun getById(@PathVariable id: Int): BookResponse =

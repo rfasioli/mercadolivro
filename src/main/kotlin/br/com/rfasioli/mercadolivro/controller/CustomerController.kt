@@ -3,13 +3,14 @@ package br.com.rfasioli.mercadolivro.controller
 import br.com.rfasioli.mercadolivro.controller.apidoc.CustomerControllerOpenApi
 import br.com.rfasioli.mercadolivro.controller.mapper.toCustomerResponse
 import br.com.rfasioli.mercadolivro.controller.mapper.toModel
+import br.com.rfasioli.mercadolivro.controller.mapper.toPageResponse
 import br.com.rfasioli.mercadolivro.controller.request.PostCustomerRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutCustomerRequest
 import br.com.rfasioli.mercadolivro.controller.response.CustomerResponse
+import br.com.rfasioli.mercadolivro.controller.response.PageResponse
 import br.com.rfasioli.mercadolivro.security.annotation.OnlyAdminCanAccessResource
 import br.com.rfasioli.mercadolivro.security.annotation.UserCanOnlyAccessTheirOwnResource
 import br.com.rfasioli.mercadolivro.service.CustomerService
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -32,9 +33,13 @@ class CustomerController(
 
     @GetMapping
     @OnlyAdminCanAccessResource
-    override fun getAllCustomer(@RequestParam name: String?, pageable: Pageable): Page<CustomerResponse> =
+    override fun getAllCustomer(
+        @RequestParam name: String?,
+        pageable: Pageable
+    ): PageResponse<CustomerResponse> =
         customerService.getAllCustomer(name, pageable)
             .map { it.toCustomerResponse() }
+            .toPageResponse()
 
     @GetMapping("/{id}")
     @UserCanOnlyAccessTheirOwnResource

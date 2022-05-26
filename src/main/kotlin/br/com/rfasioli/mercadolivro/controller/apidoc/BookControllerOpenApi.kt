@@ -3,9 +3,9 @@ package br.com.rfasioli.mercadolivro.controller.apidoc
 import br.com.rfasioli.mercadolivro.controller.request.PostBookRequest
 import br.com.rfasioli.mercadolivro.controller.request.PutBookRequest
 import br.com.rfasioli.mercadolivro.controller.response.BookResponse
+import br.com.rfasioli.mercadolivro.controller.response.PageResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
 @Tag(name = "Book", description = "this API provide methods for operations with Books")
@@ -15,10 +15,10 @@ interface BookControllerOpenApi {
     fun create(request: PostBookRequest): BookResponse
 
     @Operation(summary = "Find all new books, also all book containing text on title")
-    fun getAll(title: String?, pageable: Pageable): Page<BookResponse>
+    fun getAll(title: String?, pageable: Pageable): PageResponse<BookResponse>
 
     @Operation(summary = "Find all books in active status")
-    fun getActives(pageable: Pageable): Page<BookResponse>
+    fun getActives(pageable: Pageable): PageResponse<BookResponse>
 
     @Operation(summary = "Find a book by id")
     fun getById(id: Int): BookResponse
