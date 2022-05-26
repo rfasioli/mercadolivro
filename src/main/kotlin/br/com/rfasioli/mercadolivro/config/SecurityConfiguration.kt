@@ -1,5 +1,6 @@
 package br.com.rfasioli.mercadolivro.config
 
+import br.com.rfasioli.mercadolivro.enums.Role
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import br.com.rfasioli.mercadolivro.security.AuthenticationFilter
 import br.com.rfasioli.mercadolivro.security.AuthorizationFilter
@@ -23,14 +24,18 @@ class SecurityConfiguration(
     private val jwtUtil: JwtUtil
 ) : WebSecurityConfigurerAdapter() {
 
+    private final val publicMatchers = arrayOf<String>()
     private final val publicPostMatchers = arrayOf("/customers")
+    private final val adminMatchers = arrayOf("/admin/**")
 
     override fun configure(http: HttpSecurity) {
         http.cors().and()
             .csrf().disable()
 
         http.authorizeRequests()
+            .antMatchers(*publicMatchers).permitAll()
             .antMatchers(HttpMethod.POST, *publicPostMatchers).permitAll()
+            .antMatchers(*adminMatchers).hasAuthority(Role.ADMIN.description)
             .anyRequest().authenticated()
 
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
