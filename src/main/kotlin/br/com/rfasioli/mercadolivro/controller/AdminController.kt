@@ -12,6 +12,6 @@ class AdminController {
         private const val MESSAGE = "This is a Report. Only admin can see it!"
     }
 
-    @GetMapping("/report")
+    @GetMapping("/reports")
     fun getReport(): String = MESSAGE
 }
