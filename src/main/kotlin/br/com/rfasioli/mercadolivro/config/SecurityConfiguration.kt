@@ -2,6 +2,7 @@ package br.com.rfasioli.mercadolivro.config
 
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import br.com.rfasioli.mercadolivro.security.AuthenticationFilter
+import br.com.rfasioli.mercadolivro.security.AuthorizationFilter
 import br.com.rfasioli.mercadolivro.security.JwtUtil
 import br.com.rfasioli.mercadolivro.service.UserDetailsCustomService
 import org.springframework.context.annotation.Configuration
@@ -33,6 +34,7 @@ class SecurityConfiguration(
             .anyRequest().authenticated()
 
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
+            .addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
 
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

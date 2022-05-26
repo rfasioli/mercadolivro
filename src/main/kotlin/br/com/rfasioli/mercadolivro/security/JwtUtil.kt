@@ -1,5 +1,8 @@
 package br.com.rfasioli.mercadolivro.security
 
+import br.com.rfasioli.mercadolivro.exception.AuthenticationException
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
@@ -21,4 +24,24 @@ class JwtUtil {
             .setExpiration(Date(System.currentTimeMillis() + expiration!!))
             .signWith(SignatureAlgorithm.HS512, secret!!.toByteArray())
             .compact()
+
+    fun isValidToken(token: String): Boolean =
+        getClaims(token)
+            .takeIf { it.subject != null && it.expiration != null && Date().before(it.expiration) }
+            ?.let { true }
+            ?: false
+
+    fun getClaims(token: String): Claims {
+        try {
+            return Jwts.parser()
+                .setSigningKey(secret!!.toByteArray())
+                .parseClaimsJws(token)
+                .body
+        } catch (ex: JwtException) {
+            throw AuthenticationException("Invalid token", ex)
+        }
+    }
+
+    fun getSubject(token: String): String =
+        getClaims(token).subject
 }
