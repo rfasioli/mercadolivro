@@ -41,8 +41,8 @@ class SecurityConfig(
         "/v3/api-docs.yaml",
         "/v3/api-docs",
         "/swagger-ui.html",
-        "/v3/api-docs/swagger-config",
-        "/swagger-ui/index.html"
+        "/v3/api-docs/**",
+        "/swagger-ui/**"
     )
 
     override fun configure(http: HttpSecurity) {
