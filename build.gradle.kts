@@ -12,7 +12,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("io.gitlab.arturbosch.detekt") version "1.20.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
-//    id("jacoco")
+    id("jacoco")
     id("com.gorylenko.gradle-git-properties") version "2.4.1"
 }
 
@@ -26,6 +26,7 @@ val h2Version = "2.1.212"
 val kotlinLoggingVersion = "2.1.23"
 val springCloudVersion = "2021.0.2"
 val jwtVersion = "0.9.1"
+val mockkVersion = "1.12.4"
 
 repositories {
     mavenCentral()
@@ -65,8 +66,9 @@ dependencies {
     runtimeOnly("mysql:mysql-connector-java")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("com.h2database:h2:$h2Version")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("com.h2database:h2:$h2Version")
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }
 
 dependencyManagement {
