@@ -21,7 +21,7 @@ class AuthorizationFilter(
         chain: FilterChain
     ) {
         request.getHeader("Authorization")
-            .takeIf { it.startsWith("Bearer ") }
+            .takeIf { it?.startsWith("Bearer ") ?: false }
             ?.removePrefix("Bearer ")
             ?.let { getAuthentication(it) }
             ?.let { SecurityContextHolder.getContext().authentication = it }

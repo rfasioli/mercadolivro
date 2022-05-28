@@ -10,7 +10,8 @@ fun buildCustomer(
     name: String = "Customer Name",
     email: String = "${UUID.randomUUID()}@email.com",
     password: String = UUID.randomUUID().toString(),
-    status: CustomerStatus = CustomerStatus.ACTIVE
+    status: CustomerStatus = CustomerStatus.ACTIVE,
+    roles: Set<Role> = setOf(Role.CUSTOMER)
 ): CustomerModel =
     CustomerModel(
         id = id,
@@ -18,5 +19,5 @@ fun buildCustomer(
         email = email,
         status = status,
         password = password,
-        roles = setOf(Role.CUSTOMER)
+        roles = roles
     )
