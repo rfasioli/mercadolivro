@@ -21,10 +21,10 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val flywayVersion = "8.5.11"
-val springDocVersion = "1.6.8"
+val springDocVersion = "1.6.9"
 val h2Version = "2.1.212"
 val kotlinLoggingVersion = "2.1.23"
-val springCloudVersion = "2021.0.2"
+val springCloudVersion = "2021.0.3"
 val jwtVersion = "0.9.1"
 val mockkVersion = "1.12.4"
 
