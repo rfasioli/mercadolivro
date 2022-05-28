@@ -31,8 +31,6 @@ data class BookModel(
 
 ) {
 
-    companion object;
-
     constructor(
         id: Int? = null,
         title: String,

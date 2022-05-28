@@ -49,6 +49,4 @@ data class PurchaseModel(
     @LastModifiedDate
     @Column(name = "updated_at")
     val updatedAt: LocalDateTime? = null
-) {
-    companion object;
-}
+)

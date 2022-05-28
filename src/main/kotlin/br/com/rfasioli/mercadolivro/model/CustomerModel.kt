@@ -38,6 +38,4 @@ data class CustomerModel(
     @CollectionTable(name = "customer_roles", joinColumns = [JoinColumn(name = "customerId")])
     @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     var roles: Set<Role> = setOf()
-) {
-    companion object;
-}
+)

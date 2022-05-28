@@ -5,7 +5,6 @@ import br.com.rfasioli.mercadolivro.enums.CustomerStatus
 import br.com.rfasioli.mercadolivro.exception.CustomerNotActiveException
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.mock.buildCustomer
-import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -46,7 +45,7 @@ class CustomerServiceTest : UnitTest {
     fun `should return all customers`() {
 
         val pageable = PageRequest.of(0, 10)
-        val fakeCustomers = listOf(CustomerModel.buildCustomer(), CustomerModel.buildCustomer())
+        val fakeCustomers = listOf(buildCustomer(), buildCustomer())
 
         every { customerRepository.findAll(pageable) } returns
             PageImpl(fakeCustomers, pageable, fakeCustomers.size.toLong())
@@ -62,7 +61,7 @@ class CustomerServiceTest : UnitTest {
     fun `should return all customers containing name part`() {
 
         val pageable = PageRequest.of(0, 10)
-        val fakeCustomers = listOf(CustomerModel.buildCustomer(), CustomerModel.buildCustomer())
+        val fakeCustomers = listOf(buildCustomer(), buildCustomer())
         val name = "abc"
 
         every { customerRepository.findByNameContaining(any(), pageable) } returns
@@ -77,7 +76,7 @@ class CustomerServiceTest : UnitTest {
 
     @Test
     fun `should create customer with encrypted password`() {
-        val fakeCustomer = CustomerModel.buildCustomer()
+        val fakeCustomer = buildCustomer()
         val initialPassword = fakeCustomer.password
         val fakePassword = UUID.randomUUID().toString()
         val fakeCustomerEncrypted = fakeCustomer.copy(password = fakePassword)
@@ -92,9 +91,9 @@ class CustomerServiceTest : UnitTest {
     }
 
     @Test
-    fun `shouldReturnCustomerById`() {
+    fun `should return customer by id`() {
         val customerId = Random.nextInt()
-        val fakeCustomer = CustomerModel.buildCustomer(customerId)
+        val fakeCustomer = buildCustomer(customerId)
 
         every { customerRepository.findById(customerId) } returns Optional.of(fakeCustomer)
 
@@ -118,7 +117,7 @@ class CustomerServiceTest : UnitTest {
     @Test
     fun `should return customer by id when status active`() {
         val customerId = Random.nextInt()
-        val fakeCustomer = CustomerModel.buildCustomer(id = customerId, status = CustomerStatus.ACTIVE)
+        val fakeCustomer = buildCustomer(id = customerId, status = CustomerStatus.ACTIVE)
 
         every { customerRepository.findById(customerId) } returns Optional.of(fakeCustomer)
 
@@ -134,7 +133,7 @@ class CustomerServiceTest : UnitTest {
         status: CustomerStatus
     ) {
         val customerId = Random.nextInt()
-        val fakeCustomer = CustomerModel.buildCustomer(id = customerId, status = status)
+        val fakeCustomer = buildCustomer(id = customerId, status = status)
 
         every { customerRepository.findById(customerId) } returns Optional.of(fakeCustomer)
 
@@ -157,7 +156,7 @@ class CustomerServiceTest : UnitTest {
     @Test
     fun `should update customer `() {
         val customerId = Random.nextInt()
-        val fakeCustomer = CustomerModel.buildCustomer(customerId)
+        val fakeCustomer = buildCustomer(customerId)
 
         every { customerRepository.existsById(customerId) } returns true
         every { customerRepository.save(fakeCustomer) } returns fakeCustomer
@@ -171,7 +170,7 @@ class CustomerServiceTest : UnitTest {
     @Test
     fun `should throw not found exception when update invalid customer `() {
         val customerId = Random.nextInt()
-        val fakeCustomer = CustomerModel.buildCustomer(customerId)
+        val fakeCustomer = buildCustomer(customerId)
 
         every { customerRepository.existsById(customerId) } returns false
 
@@ -184,7 +183,7 @@ class CustomerServiceTest : UnitTest {
     @Test
     fun `should change customer status do inactive when delete customer`() {
         val customerId = Random.nextInt()
-        val fakeCustomer = CustomerModel.buildCustomer(customerId)
+        val fakeCustomer = buildCustomer(customerId)
         val expectedCustomer = fakeCustomer.copy(status = CustomerStatus.INACTIVE)
 
         every { customerService.getCustomer(customerId) } returns fakeCustomer
@@ -212,7 +211,7 @@ class CustomerServiceTest : UnitTest {
     }
 
     @ParameterizedTest
-    @CsvSource(*["true", "false"])
+    @CsvSource("true", "false")
     fun `should verify if email is available`(
         exists: Boolean
     ) {
