@@ -4,7 +4,6 @@ import br.com.rfasioli.mercadolivro.enums.Role
 import br.com.rfasioli.mercadolivro.mock.buildCustomer
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
 import br.com.rfasioli.mercadolivro.security.UserCustomDetails
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,8 +30,8 @@ class CustomerControllerTest {
     @Autowired
     private lateinit var customerRepository: CustomerRepository
 
-    @Autowired
-    private lateinit var objectMapper: ObjectMapper
+//    @Autowired
+//    private lateinit var objectMapper: ObjectMapper
 
     @BeforeEach
     fun setup() =
@@ -55,5 +54,4 @@ class CustomerControllerTest {
             .andExpect(jsonPath("$.itens[1].id").value(expectedCustomers[1].id))
             .andExpect(jsonPath("$.itens[2].id").value(expectedCustomers[2].id))
     }
-
 }
