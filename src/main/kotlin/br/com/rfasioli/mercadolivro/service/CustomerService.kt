@@ -2,6 +2,7 @@ package br.com.rfasioli.mercadolivro.service
 
 import br.com.rfasioli.mercadolivro.enums.CustomerStatus
 import br.com.rfasioli.mercadolivro.enums.Role
+import br.com.rfasioli.mercadolivro.exception.CustomerNotActiveException
 import br.com.rfasioli.mercadolivro.exception.CustomerNotFoundException
 import br.com.rfasioli.mercadolivro.model.CustomerModel
 import br.com.rfasioli.mercadolivro.repository.CustomerRepository
@@ -26,8 +27,10 @@ class CustomerService(
             .orElseThrow { CustomerNotFoundException(id) }
 
     fun getActiveCustomer(id: Int): CustomerModel =
-        customerRepository.findByIdAndStatus(id, CustomerStatus.ACTIVE)
+        customerRepository.findById(id)
             .orElseThrow { CustomerNotFoundException(id) }
+            .takeIf { it.status == CustomerStatus.ACTIVE }
+            ?: throw CustomerNotActiveException(id)
 
     fun createCustomer(customer: CustomerModel) =
         customer
@@ -44,11 +47,10 @@ class CustomerService(
             ?: throw CustomerNotFoundException(customer.id!!)
 
     fun deleteCustomer(id: Int) {
-        customerRepository.findById(id)
-            .orElseThrow { CustomerNotFoundException(id) }
+        this.getCustomer(id)
             .also { bookService.deleteByCustomer(it) }
             .also { it.status = CustomerStatus.INACTIVE }
-            .let { updateCustomer(it) }
+            .let { customerRepository.save(it) }
     }
 
     fun emailAvailable(email: String): Boolean =

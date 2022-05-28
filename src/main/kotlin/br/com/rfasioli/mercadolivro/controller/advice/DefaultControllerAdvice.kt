@@ -3,6 +3,7 @@ package br.com.rfasioli.mercadolivro.controller.advice
 import br.com.rfasioli.mercadolivro.controller.mapper.toFieldErrorResponse
 import br.com.rfasioli.mercadolivro.controller.response.ErrorResponse
 import br.com.rfasioli.mercadolivro.exception.BadRequestException
+import br.com.rfasioli.mercadolivro.exception.NotActiveException
 import br.com.rfasioli.mercadolivro.exception.NotFoundException
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
@@ -31,9 +32,9 @@ class DefaultControllerAdvice {
             HttpStatus.NOT_FOUND
         )
 
-    @ExceptionHandler(BadRequestException::class)
+    @ExceptionHandler(*[BadRequestException::class, NotActiveException::class])
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleBadRequestException(exception: BadRequestException): ResponseEntity<ErrorResponse> =
+    fun handleBadRequestException(exception: RuntimeException): ResponseEntity<ErrorResponse> =
         ResponseEntity(
             ErrorResponse(
                 message = exception.message,
