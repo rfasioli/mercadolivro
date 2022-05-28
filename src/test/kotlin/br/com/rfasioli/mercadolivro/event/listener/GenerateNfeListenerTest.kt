@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
-class GenerateNfeListenerTest: UnitTest {
+class GenerateNfeListenerTest : UnitTest {
 
     @MockK
     private lateinit var purchaseService: PurchaseService
