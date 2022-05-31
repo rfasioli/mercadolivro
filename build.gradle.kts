@@ -106,13 +106,13 @@ tasks.withType<Test> {
     )
 }
 
-// java.sourceCompatibility = JavaVersion.VERSION_17
-//
-// configurations {
-//    compileOnly {
-//        extendsFrom(configurations.annotationProcessor.get())
-//    }
-// }
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
+}
 
 detekt {
     config = files("$projectDir/config/detekt/style-config.yml")
