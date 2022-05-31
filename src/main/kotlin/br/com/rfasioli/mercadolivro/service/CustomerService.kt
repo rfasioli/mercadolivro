@@ -32,7 +32,7 @@ class CustomerService(
             .takeIf { it.status == CustomerStatus.ACTIVE }
             ?: throw CustomerNotActiveException(id)
 
-    fun createCustomer(customer: CustomerModel) =
+    fun createCustomer(customer: CustomerModel): CustomerModel =
         customer
             .copy(
                 roles = setOf(Role.CUSTOMER),
@@ -40,7 +40,7 @@ class CustomerService(
             )
             .let { customerRepository.save(it) }
 
-    fun updateCustomer(customer: CustomerModel) =
+    fun updateCustomer(customer: CustomerModel): CustomerModel =
         customer
             .takeIf { customerRepository.existsById(it.id!!) }
             ?.let { customerRepository.save(it) }
