@@ -23,7 +23,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 val flywayVersion = "8.5.12"
 val springDocVersion = "1.6.9"
-val h2Version = "2.1.212"
+val h2Version = "2.1.214"
 val kotlinLoggingVersion = "2.1.23"
 val springCloudVersion = "2021.0.3"
 val jwtVersion = "0.9.1"
