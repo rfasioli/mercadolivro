@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("kapt") version "1.6.21"
     kotlin("plugin.noarg") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
+    kotlin("plugin.spring") version "1.7.10"
     kotlin("plugin.jpa") version "1.6.21"
     id("java-library")
     id("org.springframework.boot") version "2.7.0"
