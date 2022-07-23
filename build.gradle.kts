@@ -9,7 +9,7 @@ plugins {
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
     id("java-library")
-    id("org.springframework.boot") version "2.7.0"
+    id("org.springframework.boot") version "2.7.2"
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
